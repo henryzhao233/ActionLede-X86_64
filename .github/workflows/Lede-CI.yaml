@@ -58,7 +58,6 @@ jobs:
         [ -e $FEEDS_CONF ] && cp -f $FEEDS_CONF /lede/openwrt/feeds.conf.default
         echo 'src-git helloworld https://github.com/fw876/helloworld' >>feeds.conf.default
         echo 'src-git passwall https://github.com/xiaorouji/openwrt-passwall' >>feeds.conf.default
-        cat /lede/openwrt/feeds.conf.default
         cd /lede/openwrt
         make defconfig
 
