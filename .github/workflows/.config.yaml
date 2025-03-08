@@ -83,6 +83,14 @@ jobs:
         sudo chmod 777 ${{ github.workspace }}/lede/file
         sudo mv -f config.zip ${{ github.workspace }}/lede/file/
 
+    - name: 同步config
+      uses: peaceiris/actions-gh-pages@v3
+      with: 
+        personal_token: ${{ secrets.PERSONAL_TOKEN }} # 令牌
+        publish_dir: ${{ github.workspace }}/lede/file/*
+        external_repository: henryzhao233/compile-automation # 仓库B，格式为：user/repo
+        publish_branch: main # 仓库B的分支
+
     - name: 上传config
       uses: actions/upload-artifact@v4
       with:
