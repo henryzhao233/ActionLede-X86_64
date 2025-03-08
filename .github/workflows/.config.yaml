@@ -88,7 +88,7 @@ jobs:
       with: 
         personal_token: ${{ secrets.PERSONAL_TOKEN }} # 令牌
         publish_dir: ${{ github.workspace }}/lede/openwrt/.config
-        external_repository: henryzhao233/compile-automation/.config # 仓库B，格式为：user/repo
+        external_repository: henryzhao233/compile-automation # 仓库B，格式为：user/repo
         publish_branch: main # 仓库B的分支
 
     - name: 上传config
