@@ -20,10 +20,7 @@ env:
   TZ: Asia/Shanghai
 
 jobs:
-  build_openwrt:
-
-    name: Build OpenWrt config
-
+  build:
     runs-on: ubuntu-22.04
 
     steps:
@@ -49,7 +46,7 @@ jobs:
       working-directory: /lede
       run: |
         df -hT $PWD
-        git clone https://github.com/coolsnowwolf/lede.git openwrt
+        git clone https://github.com/coolsnowwolf/lede
         ln -sf /lede/openwrt $GITHUB_WORKSPACE/openwrt
 
     - name: 覆写插件配置
@@ -84,28 +81,15 @@ jobs:
         TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
 
-    - name: 打包文件1
+    - name: 打包文件
       run: |
         sudo zip -r config.zip /lede/openwrt/.config
         mkdir -p ${{ github.workspace }}/lede/file
         sudo chmod 777 ${{ github.workspace }}/lede/file
         sudo mv -f config.zip ${{ github.workspace }}/lede/file/
 
-   - name: 打包文件2
-      run: |
-        sudo zip -r dl.zip /lede/openwrt/dl
-        mkdir -p ${{ github.workspace }}/lede/file
-        sudo chmod 777 ${{ github.workspace }}/lede/file
-        sudo mv -f dl.zip ${{ github.workspace }}/lede/file/
-
     - name: 上传config
       uses: actions/upload-artifact@v4
       with:
         name: OpenWrt.config
-        path: ${{ github.workspace }}/lede/file/*
-
-   - name: 上传dl
-      uses: actions/upload-artifact@v4
-      with:
-        name: dl.zip
         path: ${{ github.workspace }}/lede/file/*
