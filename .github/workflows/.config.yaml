@@ -45,12 +45,12 @@ jobs:
       working-directory: /lede
       run: |
         df -hT $PWD
-        git clone -b openwrt-24.10-6.6 --single-branch --filter=blob:none https://github.com/padavanonly/immortalwrt-mt798x-24.10 openwrt
+        git clone -b master --single-branch --filter=blob:none https://github.com/immortalwrt/immortalwrt openwrt
         ln -sf /lede/openwrt $GITHUB_WORKSPACE/openwrt
 
-    - name: 覆写插件配置
-      run: |
-        [ -e $FEEDS_CONF ] && cp -f $FEEDS_CONF /lede/openwrt/feeds.conf.default
+#    - name: 覆写插件配置
+#      run: |
+#        [ -e $FEEDS_CONF ] && cp -f $FEEDS_CONF /lede/openwrt/feeds.conf.default
 
     - name: 更新插件库
       run: | 
@@ -60,16 +60,16 @@ jobs:
       run: | 
         cd /lede/openwrt && ./scripts/feeds install -a
 
-    - name: 删除冲突插件
-      run: | 
-        rm -rf feeds/smpackage/{base-files,dnsmasq,firewall*,fullconenat,libnftnl,nftables,ppp,opkg,ucl,upx,vsftpd-alt,miniupnpd-iptables,wireless-regdb}
+#    - name: 删除冲突插件
+#      run: | 
+#        rm -rf feeds/smpackage/{base-files,dnsmasq,firewall*,fullconenat,libnftnl,nftables,ppp,opkg,ucl,upx,vsftpd-alt,miniupnpd-iptables,wireless-regdb}
         
-    - name: 覆写
-      run: |
-        [ -e $CONFIG_FILE ] && cp -f $CONFIG_FILE /lede/openwrt/.config
-        cd /lede/openwrt
-        sed -i 's/192.168.1.1/192.168.3.10/g' package/base-files/files/bin/config_generate
-        sed -i 's/OpenWrt/Jayha/g' package/base-files/files/bin/config_generate
+#    - name: 覆写
+#      run: |
+#        [ -e $CONFIG_FILE ] && cp -f $CONFIG_FILE /lede/openwrt/.config
+#        cd /lede/openwrt
+#        sed -i 's/192.168.1.1/192.168.3.10/g' package/base-files/files/bin/config_generate
+#        sed -i 's/OpenWrt/Jayha/g' package/base-files/files/bin/config_generate
 
     - name: SSH connection to Actions
       uses: P3TERX/ssh2actions@main
